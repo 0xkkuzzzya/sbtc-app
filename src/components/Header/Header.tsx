@@ -24,6 +24,9 @@ const NameBlock = styled.div`
     @media (max-width: 800px) {
         margin-left: 15px;
     }
+    @media (max-width: 480px) {
+        margin-left: 7.5%;
+    }
 `
 
 const SunBTCNameBlock = styled.img`
@@ -39,7 +42,7 @@ const Name = styled.a`
     margin-left: 10px;
     margin-top: 5px;
     @media (max-width: 800px) {
-        font-size: 25px;
+        font-size: 22px;
     }
 `
 
@@ -49,12 +52,13 @@ const NavContainer = styled.div`
     align-items: center;
     margin-top: 5px;
     gap: 20px;
+    margin-left: -53px;
     @media (max-width: 800px) {
         position: fixed;
         bottom: 0;
         width: 100%;
         height: 70px;
-        background-color: #2227;
+        background-color: #191818;
         margin-top: 0px;
         margin-left: 0px;
         display: flex;
@@ -87,12 +91,24 @@ const Icon = styled.img`
 `
 
 const ConnectButton = styled.button`
+    width: 164px;
     background: linear-gradient(to right, #e97919, #e7290e);
     border: none;
     outline: none;
     border-radius: 30px;
     cursor: pointer;
     margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @media (max-width: 800px) {
+        margin-right: 15px;
+        margin-top: 0px;
+    }
+    @media (max-width: 480px) {
+        margin-right: 7.5%;
+        width: 140px;
+    }
 `
 
 const ConnectButtonText = styled.div`
@@ -102,12 +118,19 @@ const ConnectButtonText = styled.div`
     padding: 10px 20px;
     display: flex;
     align-items: center;
+    @media (max-width: 480px) {
+        font-size: 13px;
+    }
 `
 
 const TronIcon = styled.img`
     width: 20px;
     height: 20px;
     margin-right: 5px;
+    @media (max-width: 480px) {
+        width: 17px;
+        height: 17px;
+    }
 `
 
 
@@ -116,37 +139,43 @@ export const Header = () => {
     const [readyState, setReadyState] = useState(WalletReadyState.NotFound);
     const [account, setAccount] = useState('');
     const [netwok, setNetwork] = useState({});
-    const [signedMessage, setSignedMessage] = useState('');
+
+    var walletAddr: string = "";
 
     const adapter = useMemo(() => new TronLinkAdapter(), []);
     useEffect(() => {
-      setReadyState(adapter.state as unknown as WalletReadyState);
-      setAccount(adapter.address || '');
-   
-      adapter.on('connect', () => {
+        setReadyState(adapter.state as unknown as WalletReadyState);
         setAccount(adapter.address || '');
-      });
-   
-      adapter.on('readyStateChanged', (state: any) => {
-        setReadyState(state);
-      });
-   
-      adapter.on('accountsChanged', (data: any) => {
-        setAccount(data);
-      });
-   
-      adapter.on('chainChanged', (data: any) => {
-        setNetwork(data);
-      });
-   
-      adapter.on('disconnect', () => {
-        // when disconnect from wallet
-      });
-      return () => {
-        // remove all listeners when components is destroyed
-        adapter.removeAllListeners();
-      };
+
+        adapter.on('connect', () => {
+            setAccount(adapter.address || '');
+        });
+
+        adapter.on('readyStateChanged', (state: any) => {
+            setReadyState(state);
+        });
+
+        adapter.on('accountsChanged', (data: any) => {
+            setAccount(data);
+        });
+
+        adapter.on('chainChanged', (data: any) => {
+            setNetwork(data);
+        });
+
+        adapter.on('disconnect', () => {
+            setAccount('');
+            setReadyState(WalletReadyState.NotFound);
+        });
+        return () => {
+            adapter.removeAllListeners();
+        };
     }, []);
+
+    if (adapter.connected) {
+        walletAddr = String(account).slice(0, 4) + '...' + String(account).slice(-4);
+    }
+
 
     return (
         <HeaderContainer>
@@ -168,8 +197,12 @@ export const Header = () => {
                     </NavBlock>
                 </HeaderLink>
             </NavContainer>
-            <ConnectButton disabled={adapter.connected} onClick={() => adapter.connect()}>
-                <ConnectButtonText><TronIcon src={TronLogo} /> Connect</ConnectButtonText>
+            <ConnectButton
+                onClick={() => { adapter.connected ? adapter.disconnect() : adapter.connect() }}>
+                <ConnectButtonText>
+                    <TronIcon src={TronLogo} />
+                    {adapter.connected ? walletAddr : 'Connect'}
+                </ConnectButtonText>
             </ConnectButton>
         </HeaderContainer>
     )

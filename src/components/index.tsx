@@ -6,7 +6,6 @@ import { MarcketplacePage } from "./Marcketplace/Marcketplace";
 
 const Container = styled.div`
     width: 800px;
-    height: calc(100vh - 100px);
     margin: 0 auto;
     @media (max-width: 800px) {
         width: 100%;
