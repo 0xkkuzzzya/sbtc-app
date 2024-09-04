@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import SunBTCMainLogo from '../../assets/SunBTCMainLogo.webp';
 import { HeaderLink } from "../CustomLinks/HeaderLinks";
+import { TronLinkAdapter } from '@tronweb3/tronwallet-adapters';
 import MarcketplaceIcon from '../../assets/MarcketplaceIcon.svg';
 import HomeIcon from '../../assets/HomeIcon.png';
-import { WalletConnectWallet } from "@tronweb3/walletconnect-tron";
 import TronLogo from '../../assets/TronLogo.png';
+import { useEffect, useMemo, useState } from "react";
+import { WalletReadyState } from "@tronweb3/tronwallet-abstract-adapter";
 
 const HeaderContainer = styled.div`
     width: 100%;
@@ -111,18 +113,40 @@ const TronIcon = styled.img`
 
 export const Header = () => {
 
-    const wallet = new WalletConnectWallet({
-        network: 'tron:mainnet',
-        options: {
-            projectId: '26740f7490cb1da6d1000d0f89d0d988',
-            metadata: {
-                name: 'SunBTCt',
-                description: 'SunBTC',
-                url: 'https://app.sunbtc.io/',
-                icons: [SunBTCMainLogo]
-            }
-        }
-    });
+    const [readyState, setReadyState] = useState(WalletReadyState.NotFound);
+    const [account, setAccount] = useState('');
+    const [netwok, setNetwork] = useState({});
+    const [signedMessage, setSignedMessage] = useState('');
+
+    const adapter = useMemo(() => new TronLinkAdapter(), []);
+    useEffect(() => {
+      setReadyState(adapter.state as unknown as WalletReadyState);
+      setAccount(adapter.address || '');
+   
+      adapter.on('connect', () => {
+        setAccount(adapter.address || '');
+      });
+   
+      adapter.on('readyStateChanged', (state: any) => {
+        setReadyState(state);
+      });
+   
+      adapter.on('accountsChanged', (data: any) => {
+        setAccount(data);
+      });
+   
+      adapter.on('chainChanged', (data: any) => {
+        setNetwork(data);
+      });
+   
+      adapter.on('disconnect', () => {
+        // when disconnect from wallet
+      });
+      return () => {
+        // remove all listeners when components is destroyed
+        adapter.removeAllListeners();
+      };
+    }, []);
 
     return (
         <HeaderContainer>
@@ -144,7 +168,7 @@ export const Header = () => {
                     </NavBlock>
                 </HeaderLink>
             </NavContainer>
-            <ConnectButton onClick={() => wallet.connect()}>
+            <ConnectButton disabled={adapter.connected} onClick={() => adapter.connect()}>
                 <ConnectButtonText><TronIcon src={TronLogo} /> Connect</ConnectButtonText>
             </ConnectButton>
         </HeaderContainer>
