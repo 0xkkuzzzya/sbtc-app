@@ -2,6 +2,8 @@ import styled from "styled-components";
 import SunBTCMainLogo from '../../assets/SunBTCMainLogo.webp';
 import { Link } from "react-router-dom";
 import { HeaderLink } from "../CustomLinks/HeaderLinks";
+import MarcketplaceIcon from '../../assets/MarcketplaceIcon.svg';
+import HomeIcon from '../../assets/HomeIcon.png';
 
 const HeaderContainer = styled.div`
     width: 100%;
@@ -38,13 +40,12 @@ const Name = styled.a`
     }
 `
 
-const NavBlock = styled.div`
+const NavContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
     margin-top: 5px;
-    margin-left: 43px;
     gap: 20px;
     @media (max-width: 800px) {
         position: fixed;
@@ -59,8 +60,16 @@ const NavBlock = styled.div`
     }
 `
 
+const NavBlock = styled.div`
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`
+
 const NavItem = styled.a`
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     text-decoration: none;
     cursor: pointer;
@@ -68,6 +77,11 @@ const NavItem = styled.a`
         font-size: 16px;
         margin-top: 8px;
     }
+`
+
+const Icon = styled.img`
+    width: 30px;
+    height: 30px;
 `
 
 
@@ -78,14 +92,20 @@ export const Header = () => {
                 <SunBTCNameBlock src={SunBTCMainLogo} />
                 <Name>SunBTC</Name>
             </NameBlock>
-            <NavBlock>
+            <NavContainer>
                 <HeaderLink to="/">
-                    <NavItem>Home</NavItem>
+                    <NavBlock>
+                        <Icon src={HomeIcon} />
+                        <NavItem>Home</NavItem>
+                    </NavBlock>
                 </HeaderLink>
                 <HeaderLink to="/marcketplace">
-                    <NavItem>Marcketplace</NavItem>
+                    <NavBlock>
+                        <Icon src={MarcketplaceIcon} />
+                        <NavItem>Marcketplace</NavItem>
+                    </NavBlock>
                 </HeaderLink>
-            </NavBlock>
+            </NavContainer>
         </HeaderContainer>
     )
 }
