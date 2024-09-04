@@ -1,23 +1,24 @@
 import styled from "styled-components";
 import SunBTCMainLogo from '../../assets/SunBTCMainLogo.webp';
-import { Link } from "react-router-dom";
 import { HeaderLink } from "../CustomLinks/HeaderLinks";
 import MarcketplaceIcon from '../../assets/MarcketplaceIcon.svg';
 import HomeIcon from '../../assets/HomeIcon.png';
+import { WalletConnectWallet } from "@tronweb3/walletconnect-tron";
+import TronLogo from '../../assets/TronLogo.png';
 
 const HeaderContainer = styled.div`
     width: 100%;
     height: 100px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    position: relative;
 `
 
 const NameBlock = styled.div`
     width: 200px;
     display: flex;
     align-items: center;
-    margin-right: auto;
     @media (max-width: 800px) {
         margin-left: 15px;
     }
@@ -44,7 +45,6 @@ const NavContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
     margin-top: 5px;
     gap: 20px;
     @media (max-width: 800px) {
@@ -84,8 +84,46 @@ const Icon = styled.img`
     height: 30px;
 `
 
+const ConnectButton = styled.button`
+    background: linear-gradient(to right, #e97919, #e7290e);
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 5px;
+`
+
+const ConnectButtonText = styled.div`
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+`
+
+const TronIcon = styled.img`
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+`
+
 
 export const Header = () => {
+
+    const wallet = new WalletConnectWallet({
+        network: 'tron:mainnet',
+        options: {
+            projectId: '26740f7490cb1da6d1000d0f89d0d988',
+            metadata: {
+                name: 'SunBTCt',
+                description: 'SunBTC',
+                url: 'https://app.sunbtc.io/',
+                icons: [SunBTCMainLogo]
+            }
+        }
+    });
+
     return (
         <HeaderContainer>
             <NameBlock>
@@ -106,6 +144,9 @@ export const Header = () => {
                     </NavBlock>
                 </HeaderLink>
             </NavContainer>
+            <ConnectButton onClick={() => wallet.connect()}>
+                <ConnectButtonText><TronIcon src={TronLogo} /> Connect</ConnectButtonText>
+            </ConnectButton>
         </HeaderContainer>
     )
 }

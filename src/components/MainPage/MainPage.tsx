@@ -11,7 +11,6 @@ const Container = styled.div`
 `;
 
 const LeftBlock = styled.div`
-    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -84,11 +83,10 @@ const SunBTCAmountLogo = styled.img`
 `
 
 const RightBlock = styled.div`
-    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-left: 20px;
+    margin-left: 60px;
 `
 
 const MinerBlock = styled.div`
@@ -109,10 +107,10 @@ const MinerInfoBlock = styled.div`
 
 const MinerText = styled.a`
     color: #a7a7a7;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     margin-left: 30px;
-    margin-top: 33px;
+    margin-top: 35px;
 `
 
 const AmountNFT = styled.a`
@@ -134,17 +132,17 @@ const MinerInfoText = styled.a`
     font-size: 14px;
     font-weight: 500;
     color: #eee;
-    margin-left: 30px;
     margin-top: 20px;
     display: flex;
     align-items: center;
+    justify-content: center;
 `
 
 const NavigationContainer = styled.div`
     width: 400px;
-    height: 70px;
+    height: 75px;
     border-radius: 20px;
-    margin-top: 70px;
+    margin-top: 65px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -182,15 +180,17 @@ export const MainPage = () => {
                 <NameBlock>
                     <NameText><GradientText>SunBTC</GradientText> <br /> Miner App</NameText>
                 </NameBlock>
-                <MinerBlock>
-                    <MinerInfoBlock>
-                        <MinerText>My Miner</MinerText>
-                        <AmountNFT>0 NFT</AmountNFT>
-                        <MinerText style={{marginTop: '10px'}}>0 sunBTC per day</MinerText>
-                    </MinerInfoBlock>
-                    <MinerLogo src={MinerLogoImage} />
-                </MinerBlock>
-                <MinerInfoText>0 energy on balance <QuestionBlock>?</QuestionBlock></MinerInfoText>
+                <div>
+                    <MinerBlock>
+                        <MinerInfoBlock>
+                            <MinerText>My Miner</MinerText>
+                            <AmountNFT>0 NFT</AmountNFT>
+                            <MinerText style={{ marginTop: '10px' }}>0 sunBTC per day</MinerText>
+                        </MinerInfoBlock>
+                        <MinerLogo src={MinerLogoImage} />
+                    </MinerBlock>
+                    <MinerInfoText>0 energy on balance <QuestionBlock>?</QuestionBlock></MinerInfoText>
+                </div>
             </LeftBlock>
 
             <RightBlock>
