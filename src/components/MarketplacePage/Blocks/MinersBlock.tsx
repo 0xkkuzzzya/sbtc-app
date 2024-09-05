@@ -9,6 +9,13 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     margin-bottom: 50px;
+    margin-top: 30px;
+    overflow: hidden;
+    @media (max-width: 480px) {
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 100px;
+    }
 `
 
 const InfoBlock = styled.div`
@@ -25,9 +32,20 @@ const InfoText = styled.a`
     color: #afadae;
 `
 
+const ScrollableContent = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: -17px;
+    bottom: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+`
+
 const OrderListContainer = styled.div`
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -93,7 +111,7 @@ export const MinersBlock = () => {
         },
     ]
 
-    return(
+    return (
         <Container>
             <InfoBlock>
                 <InfoText>Sell Order</InfoText>
@@ -102,11 +120,12 @@ export const MinersBlock = () => {
             <OrderListContainer>
                 {order.map((item, index) => (
                     <OrderBlock key={index}>
-                    <OrderText>{item.price} <TronIcon src={TronLogo} /></OrderText>
-                    <OrderText>{item.amount}</OrderText>
+                        <OrderText>{item.price} <TronIcon src={TronLogo} /></OrderText>
+                        <OrderText>{item.amount}</OrderText>
                     </OrderBlock>
                 ))}
             </OrderListContainer>
+
         </Container>
     )
 }   
