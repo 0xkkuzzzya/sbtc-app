@@ -190,10 +190,10 @@ export const Header = () => {
                         <NavItem>Home</NavItem>
                     </NavBlock>
                 </HeaderLink>
-                <HeaderLink to="/marcketplace">
+                <HeaderLink to="/marketplace">
                     <NavBlock>
                         <Icon src={MarcketplaceIcon} />
-                        <NavItem>Marcketplace</NavItem>
+                        <NavItem>Marketplace</NavItem>
                     </NavBlock>
                 </HeaderLink>
             </NavContainer>

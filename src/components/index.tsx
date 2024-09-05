@@ -2,7 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import { MainPage } from "./MainPage/MainPage";
 import { Header } from "./Header/Header";
-import { MarcketplacePage } from "./Marcketplace/Marcketplace";
+import { MarketplacePage } from "./MarketplacePage/Marketplace";
+
 
 const Container = styled.div`
     width: 800px;
@@ -14,7 +15,7 @@ const Container = styled.div`
 
 const routes = [
     { path: '/', name: 'MainPage', element: <MainPage /> },
-    { path: '/marcketplace', name: 'Marcketplace', element: <MarcketplacePage /> },
+    { path: '/marketplace', name: 'marketplace', element: <MarketplacePage /> },
 ]
 
 

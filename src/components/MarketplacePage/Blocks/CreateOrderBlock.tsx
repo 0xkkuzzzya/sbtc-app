@@ -2,12 +2,13 @@ import styled from "styled-components";
 
 const Container = styled.div`
     width: 100%;
+    height: 100%;
 `
 
-export const MarcketplacePage = () => {
-    return (
+export const CreateOrderBlock = () => {
+    return(
         <Container>
-            <h1>Marcketplace</h1>
+            <h1>Create Order</h1>
         </Container>
     )
-}   
+}

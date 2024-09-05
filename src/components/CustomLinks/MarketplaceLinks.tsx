@@ -14,7 +14,7 @@ interface Props {
 }
 
 
-export const HeaderLink = ({children, to}: Props) => {
+export const MarketplaceLink = ({children, to}: Props) => {
 
     const match = useMatch(to)
 
